@@ -43,21 +43,21 @@ jobs:
         # Build and tag the image
         docker build \
           -t $CONTAINER_IMAGE_API_GW \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./api-gw
+          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_API_GW ./api-gw
 
     - name: Build and tag the image customer-service
       run: |
         # Build and tag the image
         docker build \
           -t $CONTAINER_IMAGE_CUSTOMER_SERVICE \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./customer-service
+          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_CUSTOMER_SERVICE ./customer-service
 
     - name: Build and tag the image order-service
       run: |
         # Build and tag the image
         docker build \
           -t $CONTAINER_IMAGE_ORDER_SERVICE \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./order-service
+          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_ORDER_SERVICE ./order-service
            
     # Add additional steps here like scanning of image
 
