@@ -40,7 +40,7 @@ jobs:
     - name: Setup ECR
       run: |
         # Login to AWS ECR
-        $( aws ecr get-login --no-include-email )
+        $( aws ecr get-login-password)
 
     - name: Build and tag the image api-gw
       run: |
