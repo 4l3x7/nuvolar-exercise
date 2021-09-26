@@ -76,7 +76,7 @@ jobs:
 
 
     - name: Push
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       run: |
         # Push images to AWS ECR
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_API_GW
