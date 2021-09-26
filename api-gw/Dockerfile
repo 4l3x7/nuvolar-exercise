@@ -1,0 +1,1 @@
+FROM nuvolar/api-gateway
