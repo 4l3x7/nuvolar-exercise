@@ -2,7 +2,9 @@
 on:
   pull_request:
     paths:
-    - app/**
+    - api-gw/**
+    - customer-service/**
+    - order-service/**
   push:
     paths:
     - api-gw/**
