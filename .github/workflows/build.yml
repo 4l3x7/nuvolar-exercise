@@ -120,11 +120,9 @@ jobs:
         ./kustomize edit set image customer-service-image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_CUSTOMER_SERVICE
         ./kustomize edit set image order-service-image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_ORDER_SERVICE
         ./kustomize build . | kubectl apply -f -
-        # Verify deployment
-        #kubectl rollout status deployment/aws-example-octodex
         # List Public IP of cluster
         kubectl get services -o wide
-        #kubectl get ingress
+        #get Load Balancer
         export loadbalancer=$(kubectl get svc api-gw-external -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
 
     - name: Test LB GW
