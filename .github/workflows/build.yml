@@ -135,6 +135,6 @@ jobs:
         kubectl get services -o wide
         #kubectl get loadbalancer
         export loadbalancer=$(kubectl get svc api-gw-external -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
-        echo "URL to test https://${loadbalancer}:443/order"
-        curl -k -s https://${loadbalancer}:443/order | grep amount
+        echo "URL to test http://${loadbalancer}:8080/order"
+        curl -k -s http://${loadbalancer}:8080/order | grep amount
 
