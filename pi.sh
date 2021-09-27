@@ -1,0 +1,1 @@
+helm upgrade -i flux --set helmOperator.create=true --set helmOperator.createCRD=false --set git.url=git@github.com:4l3x7/nuvolar-exercise --namespace flux fluxcd/flux

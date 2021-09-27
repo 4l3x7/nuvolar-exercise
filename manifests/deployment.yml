@@ -1,30 +1,122 @@
----
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aws-example-octodex
-  annotations:
-    fluxcd.io/automated: "true"
+  name: customer-service
 spec:
   replicas: 1
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: customer-service
   template:
     metadata:
       labels:
-        app: aws-example-octodex
+        app: customer-service
     spec:
       containers:
-      - name: aws-example-octodex
-        # image: 00000000000000.dkr.ecr.my-region.amazonaws.com/example-eks:tag
-        image: REGISTRY/IMAGE:TAG
-        ports:
-        - containerPort: 5000
-        resources:
-          requests:
-            cpu: 250m
-          limits:
-            cpu: 500m
+        - name: server
+          #image: 051577428978.dkr.ecr.us-west-2.amazonaws.com/customer-service:b90171f05619f4d54d9aef9aaa1a61656e5c362e
+          image: customer-service-image
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+spec:
+  type: ClusterIP
+  selector:
+    app: customer-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: server
+          #image: 051577428978.dkr.ecr.us-west-2.amazonaws.com/order-service:b90171f05619f4d54d9aef9aaa1a61656e5c362e
+          image: order-service-image
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CUSTOMER_SERVICE_URL
+              value: "http://customer-service:8080"
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+spec:
+  type: ClusterIP
+  selector:
+    app: order-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gw
+  template:
+    metadata:
+      labels:
+        app: api-gw
+    spec:
+      containers:
+        - name: server
+          #image: 051577428978.dkr.ecr.us-west-2.amazonaws.com/api-gw:b90171f05619f4d54d9aef9aaa1a61656e5c362e
+          image: api-gw-image
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ORDER_SERVICE_URL
+              value: "http://order-service:8080"
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gw
+spec:
+  type: ClusterIP
+  selector:
+    app: api-gw
+  ports:
+  - port: 8080
+    targetPort: 8080
