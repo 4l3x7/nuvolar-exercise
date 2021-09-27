@@ -17,9 +17,4 @@ spec:
     port: 8080
     targetPort: 8080
     protocol: TCP
-  - name: http
-    port: 80
-    targetPort: 8080
-    protocol: TCP
 
-    aws acm import-certificate --certificate file://my-aws-public.crt --private-key file://my-aws-private.key --region us-west-2
