@@ -164,4 +164,4 @@ If you want, you can deploy the scenario yourself
 -   Commit and Push the changes to GitHub
 -   You can see in the Test LB GW step of the deploy-2-eks job the URL of the LoadBalancer to test and the result of the curl
 
-![alt text](https://ibb.co/Vmrx62d "LB Hostname")
+![alt text](https://github.com/4l3x7/nuvolar-exercise/images/kube.png "LoadBalancer HostName")
