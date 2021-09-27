@@ -1,19 +1,18 @@
 # build.yml
 on:
   push:
-    # paths:
-    # - 'api-gw/**'
-    # - 'customer-service/**'
-    # - 'order-service/**'
-    # - '.github/**'
-    branches:         # array of glob patterns matching against refs/heads. Optional; defaults to all
-    - main          # triggers on pushes that contain changes in master
+    paths: #only the microservices and the manifests trigger the workflow
+    - 'api-gw/**'
+    - 'customer-service/**'
+    - 'order-service/**'
+    - 'manifests/**'
+    branches:         
+    - main #only for the main branch, in this testing case, the only one
 
 name: Build and Push to ECR, Deploy to EKS
 
-# https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 env:
-  AWS_DEFAULT_REGION: us-west-2
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
   AWS_DEFAULT_OUTPUT: json
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -33,7 +32,6 @@ jobs:
       uses: actions/checkout@master
 
     # Add steps here like linting, testing, minification, etc.
-    
 
     - name: Build and tag the image api-gw
       run: |
@@ -58,8 +56,6 @@ jobs:
            
     # Add additional steps here like scanning of image
 
-    # Only push to registry on master
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -73,9 +69,8 @@ jobs:
 
 
     - name: Push
-      if: github.ref == 'refs/heads/main'
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }} # get the registry from the previous step
       run: |
         # Push images to AWS ECR
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_API_GW
@@ -85,7 +80,7 @@ jobs:
   deploy-2-eks:
     name: deploy-2-eks
     runs-on: ubuntu-latest
-    needs: build-and-push
+    needs: build-and-push # wait for the push job
     steps:
 
     - name: Configure AWS credentials
@@ -103,7 +98,7 @@ jobs:
       uses: actions/checkout@master
 
 
-    - name: Setup kubeconfig
+    - name: Setup kubeconfig # add the cluster to kubectl kubeconfig
       id: setup-kubeconfig
       run: |
         aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
@@ -116,14 +111,11 @@ jobs:
         cd $MANIFESTS_DIR
         curl -s -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
+        # Edit manifests with the built image
         ./kustomize edit set image api-gw-image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_API_GW
         ./kustomize edit set image customer-service-image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_CUSTOMER_SERVICE
         ./kustomize edit set image order-service-image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_ORDER_SERVICE
         ./kustomize build . | kubectl apply -f -
-        # List Public IP of cluster
-        kubectl get services -o wide
-        #get Load Balancer
-        export loadbalancer=$(kubectl get svc api-gw-external -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
 
     - name: Test LB GW
       env:
@@ -132,9 +124,8 @@ jobs:
         #wait for IP to the available
         sleep 120
         # List Public IP of cluster
-        kubectl get services -o wide
-        #kubectl get loadbalancer
         export loadbalancer=$(kubectl get svc api-gw-external -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
         echo "URL to test http://${loadbalancer}:8080/order"
+        # Expect the word 'ammount' in the response
         curl -k -s http://${loadbalancer}:8080/order | grep amount
 
