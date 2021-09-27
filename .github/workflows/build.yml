@@ -121,5 +121,5 @@ jobs:
         #kubectl get loadbalancer
         export loadbalancer=$(kubectl get svc api-gw-external -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
         echo "URL to test http://${loadbalancer}:8080/order"
-        curl -k -s http://${loadbalancer}:8080/order | grep order
+        curl -k -s http://${loadbalancer}:8080/order | grep amount
 
