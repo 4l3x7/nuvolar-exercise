@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
         - name: server
-          #image: 051577428978.dkr.ecr.us-west-2.amazonaws.com/customer-service:b90171f05619f4d54d9aef9aaa1a61656e5c362e
           image: customer-service-image
           ports:
             - containerPort: 8080
@@ -53,7 +52,6 @@ spec:
     spec:
       containers:
         - name: server
-          #image: 051577428978.dkr.ecr.us-west-2.amazonaws.com/order-service:b90171f05619f4d54d9aef9aaa1a61656e5c362e
           image: order-service-image
           ports:
             - containerPort: 8080
@@ -95,7 +93,6 @@ spec:
     spec:
       containers:
         - name: server
-          #image: 051577428978.dkr.ecr.us-west-2.amazonaws.com/api-gw:b90171f05619f4d54d9aef9aaa1a61656e5c362e
           image: api-gw-image
           ports:
             - containerPort: 8080
