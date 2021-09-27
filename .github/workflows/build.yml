@@ -92,7 +92,6 @@ jobs:
         aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
 
     - name: Deploy 
-      id: deploy-k8s-yaml
       env:
         MANIFESTS_DIR: ./manifests 
       run: |
@@ -112,7 +111,6 @@ jobs:
         export loadbalancer=$(kubectl get svc api-gw-external -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
 
     - name: Test 
-      id: deploy-k8s-yaml
       env:
         MANIFESTS_DIR: ./manifests 
       run: |
