@@ -115,7 +115,7 @@ jobs:
         MANIFESTS_DIR: ./manifests 
       run: |
         #wait for IP to the available
-        wait 120
+        sleep 120
         # List Public IP of cluster
         kubectl get services -o wide
         #kubectl get loadbalancer
