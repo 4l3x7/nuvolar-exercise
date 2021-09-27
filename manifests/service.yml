@@ -2,12 +2,24 @@ apiVersion: v1
 kind: Service
 metadata:
   name: api-gw-external
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm-pca:us-west-2:051577428978:certificate-authority/e527bb31-0067-4b96-99f7-5d4786bf9087
 spec:
   type: LoadBalancer
   selector:
     app: api-gw
   ports:
-  - name: http
+  - name: https
     port: 443
     targetPort: 8080
     protocol: TCP
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+
+    aws acm import-certificate --certificate file://my-aws-public.crt --private-key file://my-aws-private.key --region us-west-2
