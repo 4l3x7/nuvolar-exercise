@@ -164,3 +164,13 @@ If you want, you can deploy the scenario yourself
 -   You can see in the Test LB GW step of the deploy-2-eks job the URL of the LoadBalancer to test and the result of the curl. Change the masked *** with your AWS region for this cluster
 
 ![alt text](https://github.com/4l3x7/nuvolar-exercise/raw/main/images/kube.png "LoadBalancer HostName")
+
+##Improvements
+
+This was a testing scenario for evaluation purposes but there are several improvements that can be done, if needed:
+
+- Make individual Workflows in order to only build the image of a microservice if the the source of this microservice has been changed, nowadays all the images are built every time
+-   Make the workflow branch-dependent and deploy only in pull requests
+-   Make a docker scan of the image
+-   Lint and make unit testing with the built image isolated
+-   Use fluxctl to optimize the manifest generation
