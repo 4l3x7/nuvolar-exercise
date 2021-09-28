@@ -1,4 +1,5 @@
 [![Build and Push to ECR, Deploy to EKS](https://github.com/4l3x7/nuvolar-exercise/actions/workflows/build.yml/badge.svg)](https://github.com/4l3x7/nuvolar-exercise/actions/workflows/build.yml)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 ## AL - NuvolarWorks Technical exercise  - Associate DevOps Engineer - Part 2
 
@@ -130,7 +131,7 @@ The [GitHub Actions workflow](https://github.com/4l3x7/nuvolar-exercise/blob/mai
 
 There is an EKS cluster with the application deployed, you can see the result of the /order method in the URL
 
-[http://a27fa86656ee84d10b00a6021a7ff7cb-593991407.us-west-2.elb.amazonaws.com:8080/order](http://a27fa86656ee84d10b00a6021a7ff7cb-593991407.us-west-2.elb.amazonaws.com:8080/order)
+[http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com:8080/order](http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com:8080/order)
 
 It will be interesting for you to check also the outputs of the [GitHub Actions workflows](https://github.com/4l3x7/nuvolar-exercise/actions) to see the complete flow.
 
@@ -160,6 +161,6 @@ If you want, you can deploy the scenario yourself
 
 -   Add a dummy file to any microservice folder or change something in the manifest, the number of replicas, for example, to trigger the workflow
 -   Commit and Push the changes to GitHub
--   You can see in the Test LB GW step of the deploy-2-eks job the URL of the LoadBalancer to test and the result of the curl
+-   You can see in the Test LB GW step of the deploy-2-eks job the URL of the LoadBalancer to test and the result of the curl. Change the masked *** with your AWS region for this cluster
 
 ![alt text](https://github.com/4l3x7/nuvolar-exercise/raw/main/images/kube.png "LoadBalancer HostName")
