@@ -1,6 +1,8 @@
+[![Build and Push to ECR, Deploy to EKS](https://github.com/4l3x7/nuvolar-exercise/actions/workflows/build.yml/badge.svg)](https://github.com/4l3x7/nuvolar-exercise/actions/workflows/build.yml)
+
 ## AL - NuvolarWorks Technical exercise  - Associate DevOps Engineer - Part 2
 
-  
+
 
 ### Exercise requirements
 
@@ -128,11 +130,7 @@ The [GitHub Actions workflow](https://github.com/4l3x7/nuvolar-exercise/blob/mai
 
 There is an EKS cluster with the application deployed, you can see the result of the /order method in the URL
 
-  
-
 [http://a27fa86656ee84d10b00a6021a7ff7cb-593991407.us-west-2.elb.amazonaws.com:8080/order](http://a27fa86656ee84d10b00a6021a7ff7cb-593991407.us-west-2.elb.amazonaws.com:8080/order)
-
-  
 
 It will be interesting for you to check also the outputs of the [GitHub Actions workflows](https://github.com/4l3x7/nuvolar-exercise/actions) to see the complete flow.
 
