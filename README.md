@@ -165,7 +165,7 @@ If you want, you can deploy the scenario yourself
 
 ![alt text](https://github.com/4l3x7/nuvolar-exercise/raw/main/images/kube.png "LoadBalancer HostName")
 
-##Improvements
+## Improvements
 
 This was a testing scenario for evaluation purposes but there are several improvements that can be done, if needed:
 
