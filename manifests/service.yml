@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: api-gw-external
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm-pca:us-west-2:051577428978:certificate-authority/1400310f-e216-4da9-accf-0198cf3debce
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:iam::051577428978:server-certificate/CERT_NAME
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
 spec:
