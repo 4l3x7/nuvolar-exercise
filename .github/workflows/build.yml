@@ -125,7 +125,8 @@ jobs:
         sleep 120
         # List Public IP of cluster
         export loadbalancer=$(kubectl get svc api-gw-external -o jsonpath='{.status.loadBalancer.ingress[*].hostname}')
-        echo "URL to test http://${loadbalancer}:8080/order"
+        echo "URL to test HTTPS https://${loadbalancer}/order"
+        echo "URL to test HTTP http://${loadbalancer}/order"
         # Expect the word 'ammount' in the response
         curl -k -s http://${loadbalancer}:8080/order | grep amount
 
