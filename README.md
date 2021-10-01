@@ -98,6 +98,7 @@ The tools used in this exercise are
     
 -   EKS_REPOSITORY_NAME secret has been added to the repository
     
+-   SSL autosigned certificate has been created and uploaded to AWS IAM to further add it to the load balancer
 
 ### GitHub public repository
 
@@ -114,7 +115,6 @@ You can see the public repository [here](https://github.com/4l3x7/nuvolar-exerci
 The [GitHub Actions workflow](https://github.com/4l3x7/nuvolar-exercise/blob/main/.github/workflows/build.yml) perform this actions
 
 -   Watch for changes in the micro-services or manifest folders, if present triggers the Workflow
-    
 
 -   Build and push to ECR the micro-services images tagged with the sha of the workflow-id
     
@@ -131,7 +131,8 @@ The [GitHub Actions workflow](https://github.com/4l3x7/nuvolar-exercise/blob/mai
 
 There is an EKS cluster with the application deployed, you can see the result of the /order method in the URL
 
-[http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com:8080/order](http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com:8080/order)
+[https://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com/order](https://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com/order)
+[http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com/order](http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com/order)
 
 It will be interesting for you to check also the outputs of the [GitHub Actions workflows](https://github.com/4l3x7/nuvolar-exercise/actions) to see the complete flow.
 
