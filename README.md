@@ -125,7 +125,7 @@ The [GitHub Actions workflow](https://github.com/4l3x7/nuvolar-exercise/blob/mai
 
   
 
-## How to test the scenario
+## How to test the scenario (AWS)
 
   
 
@@ -135,6 +135,15 @@ There is an EKS cluster with the application deployed, you can see the result of
 [http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com/order](http://af6ee3f7d4ee34e86815b34ca84a3a57-1677496042.us-west-2.elb.amazonaws.com/order)
 
 It will be interesting for you to check also the outputs of the [GitHub Actions workflows](https://github.com/4l3x7/nuvolar-exercise/actions) to see the complete flow.
+
+## How to test the scenario (GKE)
+
+  
+
+There is a GKE cluster with the application deployed, you can see the result of the /order method in the URL
+
+[https://35.241.8.41/order](https://35.241.8.41/order)
+[http://35.241.8.41/order](http://35.241.8.41/order)
 
 ## How to deploy the scenario
 

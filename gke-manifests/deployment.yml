@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-service
+  template:
+    metadata:
+      labels:
+        app: customer-service
+    spec:
+      containers:
+        - name: server
+          image: nuvolar/customer-service
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+spec:
+  type: ClusterIP
+  selector:
+    app: customer-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: server
+          image: nuvolar/order-service
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CUSTOMER_SERVICE_URL
+              value: "http://customer-service:8080"
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+spec:
+  type: ClusterIP
+  selector:
+    app: order-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gw
+  template:
+    metadata:
+      labels:
+        app: api-gw
+    spec:
+      containers:
+        - name: server
+          image: nuvolar/api-gateway
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ORDER_SERVICE_URL
+              value: "http://order-service:8080"
+          imagePullPolicy: Always
